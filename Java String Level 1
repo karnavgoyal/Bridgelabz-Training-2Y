@@ -1,0 +1,250 @@
+Q1. Compare Two Strings Using charAt()
+import java.util.Scanner;
+public class CompareStrings {
+    static boolean compareStrings(String a, String b) {
+        if (a.length() != b.length())
+            return false;
+        for (int i = 0; i < a.length(); i++) {
+            if (a.charAt(i) != b.charAt(i))
+                return false;
+        }
+        return true;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String a = sc.next();
+        String b = sc.next();
+        boolean result1 = compareStrings(a, b);
+        boolean result2 = a.equals(b);
+        System.out.println("Using charAt(): " + result1);
+        System.out.println("Using equals(): " + result2);
+        System.out.println("Both results are same: " + (result1 == result2));
+    }
+}
+
+Q2. Create Substring Using charAt()
+import java.util.Scanner;
+public class CustomSubstring {
+    static String createSubstring(String text, int start, int end) {
+        String result = "";
+        for (int i = start; i < end; i++)
+            result += text.charAt(i);
+        return result;
+    }
+    static boolean compareStrings(String a, String b) {
+        if (a.length() != b.length())
+            return false;
+        for (int i = 0; i < a.length(); i++)
+            if (a.charAt(i) != b.charAt(i))
+                return false;
+        return true;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String text = sc.next();
+        int start = sc.nextInt();
+        int end = sc.nextInt();
+        String result1 = createSubstring(text, start, end);
+        String result2 = text.substring(start, end);
+        System.out.println("Using charAt(): " + result1);
+        System.out.println("Using substring(): " + result2);
+        System.out.println("Both results are same: " + compareStrings(result1, result2));
+    }
+}
+
+Q3. Return Characters of a String
+import java.util.Scanner;
+public class StringCharacters {
+    static char[] getCharacters(String text) {
+        char[] result = new char[text.length()];
+        for (int i = 0; i < text.length(); i++)
+            result[i] = text.charAt(i);
+        return result;
+    }
+    static boolean compareArrays(char[] a, char[] b) {
+        if (a.length != b.length)
+            return false;
+        for (int i = 0; i < a.length; i++)
+            if (a[i] != b[i])
+                return false;
+        return true;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String text = sc.next();
+        char[] result1 = getCharacters(text);
+        char[] result2 = text.toCharArray();
+        System.out.println("Both arrays are same: " + compareArrays(result1, result2));
+    }
+}
+
+Q4. Demonstrate NullPointerException
+public class NullPointerDemo {
+    static void generateException() {
+        String text = null;
+        System.out.println(text.length());
+    }
+    static void handleException() {
+        String text = null;
+        try {
+            System.out.println(text.length());
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException handled");
+        }
+    }
+    public static void main(String[] args) {
+        handleException();
+    }
+}
+
+Q5. Demonstrate StringIndexOutOfBoundsException
+import java.util.Scanner;
+public class StringIndexDemo {
+    static void generateException(String text) {
+        System.out.println(text.charAt(text.length()));
+    }
+    static void handleException(String text) {
+        try {
+            System.out.println(text.charAt(text.length()));
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("StringIndexOutOfBoundsException handled");
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String text = sc.next();
+        handleException(text);
+    }
+}
+
+Q6. Demonstrate IllegalArgumentException
+import java.util.Scanner;
+public class IllegalArgumentDemo {
+    static void generateException(String text) {
+        System.out.println(text.substring(5, 2));
+    }
+    static void handleException(String text) {
+        try {
+            System.out.println(text.substring(5, 2));
+        } catch (IllegalArgumentException e) {
+            System.out.println("IllegalArgumentException handled");
+        } catch (RuntimeException e) {
+            System.out.println("RuntimeException handled");
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String text = sc.next();
+        handleException(text);
+    }
+}
+
+Q7. Demonstrate NumberFormatException
+import java.util.Scanner;
+public class NumberFormatDemo {
+    static void generateException(String text) {
+        int number = Integer.parseInt(text);
+        System.out.println(number);
+    }
+    static void handleException(String text) {
+        try {
+            int number = Integer.parseInt(text);
+            System.out.println(number);
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException handled");
+        } catch (RuntimeException e) {
+            System.out.println("RuntimeException handled");
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String text = sc.next();
+        handleException(text);
+    }
+}
+
+Q8. Demonstrate ArrayIndexOutOfBoundsException
+import java.util.Scanner;
+public class ArrayIndexDemo {
+    static void generateException(String[] names) {
+        System.out.println(names[names.length]);
+    }
+    static void handleException(String[] names) {
+        try {
+            System.out.println(names[names.length]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("ArrayIndexOutOfBoundsException handled");
+        } catch (RuntimeException e) {
+            System.out.println("RuntimeException handled");
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] names = new String[3];
+        for (int i = 0; i < names.length; i++)
+            names[i] = sc.next();
+        handleException(names);
+    }
+}
+
+Q9. Convert Text to Uppercase
+import java.util.Scanner;
+public class UpperCase {
+    static String convertToUpper(String text) {
+        String result = "";
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            if (ch >= 'a' && ch <= 'z')
+                ch = (char)(ch - 32);
+            result += ch;
+        }
+        return result;
+    }
+    static boolean compareStrings(String a, String b) {
+        if (a.length() != b.length())
+            return false;
+        for (int i = 0; i < a.length(); i++)
+            if (a.charAt(i) != b.charAt(i))
+                return false;
+        return true;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String text = sc.nextLine();
+        String result1 = convertToUpper(text);
+        String result2 = text.toUpperCase();
+        System.out.println("Converted text: " + result1);
+        System.out.println("Both results are same: " + compareStrings(result1, result2));
+    }
+}
+
+Q10. Convert Text to Lowercase
+import java.util.Scanner;
+public class LowerCase {
+    static String convertToLower(String text) {
+        String result = "";
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            if (ch >= 'A' && ch <= 'Z')
+                ch = (char)(ch + 32);
+            result += ch;
+        }
+        return result;
+    }
+    static boolean compareStrings(String a, String b) {
+        if (a.length() != b.length())
+            return false;
+        for (int i = 0; i < a.length(); i++)
+            if (a.charAt(i) != b.charAt(i))
+                return false;
+        return true;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String text = sc.nextLine();
+        String result1 = convertToLower(text);
+        String result2 = text.toLowerCase();
+        System.out.println("Converted text: " + result1);
+        System.out.println("Both results are same: " + compareStrings(result1, result2));
+    }
+}

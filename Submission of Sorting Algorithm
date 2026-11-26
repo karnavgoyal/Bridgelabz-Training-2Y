@@ -1,0 +1,227 @@
+Q1. Bubble Sort - Sort Student Marks
+import java.util.Scanner;
+public class Main {
+    static void bubbleSort(int[] marks) {
+        for (int i = 0; i < marks.length - 1; i++) {
+            boolean swapped = false;
+            for (int j = 0; j < marks.length - 1 - i; j++) {
+                if (marks[j] > marks[j + 1]) {
+                    int temp = marks[j];
+                    marks[j] = marks[j + 1];
+                    marks[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+        int[] marks = new int[n];
+        System.out.println("Enter marks:");
+        for (int i = 0; i < n; i++) marks[i] = sc.nextInt();
+        bubbleSort(marks);
+        System.out.println("Sorted marks:");
+        for (int i = 0; i < n; i++) System.out.print(marks[i] + " ");
+    }
+}
+
+Q2. Insertion Sort - Sort Employee IDs
+import java.util.Scanner;
+public class Main {
+    static void insertionSort(int[] ids) {
+        for (int i = 1; i < ids.length; i++) {
+            int key = ids[i];
+            int j = i - 1;
+            while (j >= 0 && ids[j] > key) {
+                ids[j + 1] = ids[j];
+                j--;
+            }
+            ids[j + 1] = key;
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of employees: ");
+        int n = sc.nextInt();
+        int[] ids = new int[n];
+        System.out.println("Enter employee IDs:");
+        for (int i = 0; i < n; i++) ids[i] = sc.nextInt();
+        insertionSort(ids);
+        System.out.println("Sorted employee IDs:");
+        for (int i = 0; i < n; i++) System.out.print(ids[i] + " ");
+    }
+}
+
+Q3. Merge Sort - Sort an Array of Book Prices
+import java.util.Scanner;
+public class Main {
+    static void merge(int[] arr, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+        int[] a = new int[n1];
+        int[] b = new int[n2];
+        for (int i = 0; i < n1; i++) a[i] = arr[left + i];
+        for (int i = 0; i < n2; i++) b[i] = arr[mid + 1 + i];
+        int i = 0, j = 0, k = left;
+        while (i < n1 && j < n2) {
+            if (a[i] <= b[j]) arr[k++] = a[i++];
+            else arr[k++] = b[j++];
+        }
+        while (i < n1) arr[k++] = a[i++];
+        while (j < n2) arr[k++] = b[j++];
+    }
+    static void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of books: ");
+        int n = sc.nextInt();
+        int[] prices = new int[n];
+        System.out.println("Enter book prices:");
+        for (int i = 0; i < n; i++) prices[i] = sc.nextInt();
+        mergeSort(prices, 0, n - 1);
+        System.out.println("Sorted book prices:");
+        for (int i = 0; i < n; i++) System.out.print(prices[i] + " ");
+    }
+}
+
+Q4. Quick Sort - Sort Product Prices
+import java.util.Scanner;
+public class Main {
+    static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+        return i + 1;
+    }
+    static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pivot = partition(arr, low, high);
+            quickSort(arr, low, pivot - 1);
+            quickSort(arr, pivot + 1, high);
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of products: ");
+        int n = sc.nextInt();
+        int[] prices = new int[n];
+        System.out.println("Enter product prices:");
+        for (int i = 0; i < n; i++) prices[i] = sc.nextInt();
+        quickSort(prices, 0, n - 1);
+        System.out.println("Sorted product prices:");
+        for (int i = 0; i < n; i++) System.out.print(prices[i] + " ");
+    }
+}
+
+Q5. Selection Sort - Sort Exam Scores
+import java.util.Scanner;
+public class Main {
+    static void selectionSort(int[] scores) {
+        for (int i = 0; i < scores.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < scores.length; j++) {
+                if (scores[j] < scores[min]) min = j;
+            }
+            int temp = scores[i];
+            scores[i] = scores[min];
+            scores[min] = temp;
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+        int[] scores = new int[n];
+        System.out.println("Enter exam scores:");
+        for (int i = 0; i < n; i++) scores[i] = sc.nextInt();
+        selectionSort(scores);
+        System.out.println("Sorted exam scores:");
+        for (int i = 0; i < n; i++) System.out.print(scores[i] + " ");
+    }
+}
+
+Q6. Heap Sort - Sort Job Applicants by Salary
+import java.util.Scanner;
+public class Main {
+    static void heapify(int[] arr, int n, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+        if (left < n && arr[left] > arr[largest]) largest = left;
+        if (right < n && arr[right] > arr[largest]) largest = right;
+        if (largest != i) {
+            int temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+            heapify(arr, n, largest);
+        }
+    }
+    static void heapSort(int[] arr) {
+        int n = arr.length;
+        for (int i = n / 2 - 1; i >= 0; i--) heapify(arr, n, i);
+        for (int i = n - 1; i > 0; i--) {
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            heapify(arr, i, 0);
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of applicants: ");
+        int n = sc.nextInt();
+        int[] salary = new int[n];
+        System.out.println("Enter expected salaries:");
+        for (int i = 0; i < n; i++) salary[i] = sc.nextInt();
+        heapSort(salary);
+        System.out.println("Sorted salaries:");
+        for (int i = 0; i < n; i++) System.out.print(salary[i] + " ");
+    }
+}
+
+Q7. Counting Sort - Sort Student Ages
+import java.util.Scanner;
+public class Main {
+    static void countingSort(int[] ages) {
+        int[] count = new int[9];
+        for (int i = 0; i < ages.length; i++) count[ages[i] - 10]++;
+        for (int i = 1; i < count.length; i++) count[i] += count[i - 1];
+        int[] output = new int[ages.length];
+        for (int i = ages.length - 1; i >= 0; i--) {
+            output[count[ages[i] - 10] - 1] = ages[i];
+            count[ages[i] - 10]--;
+        }
+        for (int i = 0; i < ages.length; i++) ages[i] = output[i];
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+        int[] ages = new int[n];
+        System.out.println("Enter student ages between 10 and 18:");
+        for (int i = 0; i < n; i++) ages[i] = sc.nextInt();
+        countingSort(ages);
+        System.out.println("Sorted ages:");
+        for (int i = 0; i < n; i++) System.out.print(ages[i] + " ");
+    }
+}

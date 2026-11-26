@@ -1,0 +1,481 @@
+Q1. StringBuilder Problem 1: Reverse a String Using StringBuilder.
+import java.util.Scanner;
+public class Main {
+    static String reverseString(String text) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(text);
+        return sb.reverse().toString();
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String text = sc.nextLine();
+        System.out.println("Reversed string: " + reverseString(text));
+    }
+}
+
+Q2. StringBuilder Problem 2: Remove Duplicates from a String Using StringBuilder.
+import java.util.Scanner;
+import java.util.HashSet;
+public class Main {
+    static String removeDuplicates(String text) {
+        StringBuilder sb = new StringBuilder();
+        HashSet<Character> set = new HashSet<>();
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            if (!set.contains(ch)) {
+                sb.append(ch);
+                set.add(ch);
+            }
+        }
+        return sb.toString();
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String text = sc.nextLine();
+        System.out.println("String without duplicates: " + removeDuplicates(text));
+    }
+}
+
+Q3. StringBuffer Problem 1: Concatenate Strings Efficiently Using StringBuffer.
+import java.util.Scanner;
+public class Main {
+    static String concatenate(String[] arr) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < arr.length; i++)
+            sb.append(arr[i]);
+        return sb.toString();
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of strings: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+        String[] arr = new String[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter string " + (i + 1) + ": ");
+            arr[i] = sc.nextLine();
+        }
+        System.out.println("Concatenated string: " + concatenate(arr));
+    }
+}
+
+Q4. StringBuffer Problem 2: Compare StringBuffer with StringBuilder for String Concatenation.
+public class Main {
+    public static void main(String[] args) {
+        int n = 1000000;
+        long start = System.nanoTime();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++)
+            sb.append("hello");
+        long end = System.nanoTime();
+        long builderTime = end - start;
+        start = System.nanoTime();
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < n; i++)
+            buffer.append("hello");
+        end = System.nanoTime();
+        long bufferTime = end - start;
+        System.out.println("StringBuilder time: " + builderTime + " nanoseconds");
+        System.out.println("StringBuffer time: " + bufferTime + " nanoseconds");
+    }
+}
+
+Q5. FileReader Problem 1: Read a File Line by Line Using FileReader.
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+public class Main {
+    public static void main(String[] args) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null)
+                System.out.println(line);
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+    }
+}
+
+Q6. FileReader Problem 2: Count the Occurrence of a Word in a File Using FileReader.
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Scanner;
+public class Main {
+    static int countWord(String fileName, String target) {
+        int count = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] words = line.split("\\s+");
+                for (int i = 0; i < words.length; i++) {
+                    if (words[i].equals(target))
+                        count++;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+        return count;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter word to search: ");
+        String word = sc.nextLine();
+        System.out.println("Occurrences: " + countWord("data.txt", word));
+    }
+}
+
+Q7. InputStreamReader Problem 1: Convert Byte Stream to Character Stream Using InputStreamReader.
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+public class Main {
+    public static void main(String[] args) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("data.txt"), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = br.readLine()) != null)
+                System.out.println(line);
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+    }
+}
+
+Q8. InputStreamReader Problem 2: Read User Input and Write to File Using InputStreamReader.
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+public class Main {
+    public static void main(String[] args) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+             FileWriter fw = new FileWriter("output.txt")) {
+            String input;
+            System.out.println("Enter text. Type exit to stop:");
+            while (true) {
+                input = br.readLine();
+                if (input.equalsIgnoreCase("exit"))
+                    break;
+                fw.write(input);
+                fw.write(System.lineSeparator());
+            }
+            System.out.println("Data written to file successfully.");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+Q9. Challenge Problem: Compare StringBuilder, StringBuffer, FileReader, and InputStreamReader.
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+public class Main {
+    static void compareStrings() {
+        int n = 1000000;
+        long start = System.nanoTime();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++)
+            sb.append("hello");
+        long builderTime = System.nanoTime() - start;
+        start = System.nanoTime();
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < n; i++)
+            buffer.append("hello");
+        long bufferTime = System.nanoTime() - start;
+        System.out.println("StringBuilder time: " + builderTime + " nanoseconds");
+        System.out.println("StringBuffer time: " + bufferTime + " nanoseconds");
+    }
+    static int countWords(String fileName) {
+        int count = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] words = line.trim().split("\\s+");
+                if (!line.trim().isEmpty())
+                    count += words.length;
+            }
+        } catch (IOException e) {
+            System.out.println("FileReader Error: " + e.getMessage());
+        }
+        return count;
+    }
+    static int countWordsUsingInputStream(String fileName) {
+        int count = 0;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] words = line.trim().split("\\s+");
+                if (!line.trim().isEmpty())
+                    count += words.length;
+            }
+        } catch (IOException e) {
+            System.out.println("InputStreamReader Error: " + e.getMessage());
+        }
+        return count;
+    }
+    public static void main(String[] args) {
+        compareStrings();
+        long start = System.nanoTime();
+        int words1 = countWords("largefile.txt");
+        long fileReaderTime = System.nanoTime() - start;
+        start = System.nanoTime();
+        int words2 = countWordsUsingInputStream("largefile.txt");
+        long inputStreamTime = System.nanoTime() - start;
+        System.out.println("FileReader word count: " + words1);
+        System.out.println("FileReader time: " + fileReaderTime + " nanoseconds");
+        System.out.println("InputStreamReader word count: " + words2);
+        System.out.println("InputStreamReader time: " + inputStreamTime + " nanoseconds");
+    }
+}
+
+Q10. Linear Search Problem 1: Search for the First Negative Number.
+import java.util.Scanner;
+public class Main {
+    static int findFirstNegative(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < 0)
+                return i;
+        }
+        return -1;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        System.out.println("Enter elements:");
+        for (int i = 0; i < n; i++)
+            arr[i] = sc.nextInt();
+        System.out.println("Index of first negative number: " + findFirstNegative(arr));
+    }
+}
+
+Q11. Linear Search Problem 2: Search for a Specific Word in a List of Sentences.
+import java.util.Scanner;
+public class Main {
+    static String searchWord(String[] sentences, String word) {
+        for (int i = 0; i < sentences.length; i++) {
+            if (sentences[i].contains(word))
+                return sentences[i];
+        }
+        return "Not Found";
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of sentences: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+        String[] sentences = new String[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter sentence " + (i + 1) + ": ");
+            sentences[i] = sc.nextLine();
+        }
+        System.out.print("Enter word to search: ");
+        String word = sc.nextLine();
+        System.out.println(searchWord(sentences, word));
+    }
+}
+
+Q12. Binary Search Problem 1: Find the Rotation Point in a Rotated Sorted Array.
+import java.util.Scanner;
+public class Main {
+    static int findRotationPoint(int[] arr) {
+        int left = 0, right = arr.length - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] > arr[right])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return left;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        System.out.println("Enter rotated sorted array:");
+        for (int i = 0; i < n; i++)
+            arr[i] = sc.nextInt();
+        int index = findRotationPoint(arr);
+        System.out.println("Rotation point index: " + index);
+        System.out.println("Smallest element: " + arr[index]);
+    }
+}
+
+Q13. Binary Search Problem 2: Find the Peak Element in an Array.
+import java.util.Scanner;
+public class Main {
+    static int findPeak(int[] arr) {
+        int left = 0, right = arr.length - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] < arr[mid + 1])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return left;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        System.out.println("Enter elements:");
+        for (int i = 0; i < n; i++)
+            arr[i] = sc.nextInt();
+        int index = findPeak(arr);
+        System.out.println("Peak element: " + arr[index]);
+        System.out.println("Peak index: " + index);
+    }
+}
+
+Q14. Binary Search Problem 3: Search for a Target Value in a 2D Sorted Matrix.
+import java.util.Scanner;
+public class Main {
+    static boolean searchMatrix(int[][] matrix, int target) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        int left = 0, right = rows * columns - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int row = mid / columns;
+            int col = mid % columns;
+            if (matrix[row][col] == target)
+                return true;
+            else if (matrix[row][col] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        return false;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter rows: ");
+        int rows = sc.nextInt();
+        System.out.print("Enter columns: ");
+        int columns = sc.nextInt();
+        int[][] matrix = new int[rows][columns];
+        System.out.println("Enter sorted matrix:");
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < columns; j++)
+                matrix[i][j] = sc.nextInt();
+        System.out.print("Enter target: ");
+        int target = sc.nextInt();
+        System.out.println("Target found: " + searchMatrix(matrix, target));
+    }
+}
+
+Q15. Binary Search Problem 4: Find the First and Last Occurrence of an Element in a Sorted Array.
+import java.util.Scanner;
+public class Main {
+    static int firstOccurrence(int[] arr, int target) {
+        int left = 0, right = arr.length - 1, result = -1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] == target) {
+                result = mid;
+                right = mid - 1;
+            } else if (arr[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        return result;
+    }
+    static int lastOccurrence(int[] arr, int target) {
+        int left = 0, right = arr.length - 1, result = -1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] == target) {
+                result = mid;
+                left = mid + 1;
+            } else if (arr[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        return result;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        System.out.println("Enter sorted elements:");
+        for (int i = 0; i < n; i++)
+            arr[i] = sc.nextInt();
+        System.out.print("Enter target: ");
+        int target = sc.nextInt();
+        System.out.println("First occurrence: " + firstOccurrence(arr, target));
+        System.out.println("Last occurrence: " + lastOccurrence(arr, target));
+    }
+}
+
+Q16. Challenge Problem: Linear Search for First Missing Positive and Binary Search for Target.
+import java.util.Scanner;
+public class Main {
+    static int firstMissingPositive(int[] arr) {
+        int n = arr.length;
+        boolean[] present = new boolean[n + 1];
+        for (int i = 0; i < n; i++) {
+            if (arr[i] > 0 && arr[i] <= n)
+                present[arr[i]] = true;
+        }
+        for (int i = 1; i <= n; i++) {
+            if (!present[i])
+                return i;
+        }
+        return n + 1;
+    }
+    static void sort(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+    static int binarySearch(int[] arr, int target) {
+        int left = 0, right = arr.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] == target)
+                return mid;
+            else if (arr[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        return -1;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        System.out.println("Enter elements:");
+        for (int i = 0; i < n; i++)
+            arr[i] = sc.nextInt();
+        System.out.println("First missing positive: " + firstMissingPositive(arr));
+        System.out.print("Enter target value: ");
+        int target = sc.nextInt();
+        sort(arr);
+        System.out.print("Sorted array: ");
+        for (int i = 0; i < n; i++)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+        System.out.println("Target index: " + binarySearch(arr, target));
+    }
+}
