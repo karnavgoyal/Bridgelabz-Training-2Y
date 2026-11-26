@@ -1,0 +1,230 @@
+==============================================================================
+  DSA PRACTICE SHEET - PSEUDOCODE & FLOWCHART ANSWERS
+  Sections covered : Section 1 (PC-1, PC-2) and Section 2 (FC-1, FC-2)
+  (Time & Space Complexity answers are in DSAPracticeSheet.java)
+==============================================================================
+
+FLOWCHART SYMBOL KEY (used in the diagrams below)
+  ( TEXT )     = Terminal  (START / END)
+  /  TEXT  /   = Input / Output block
+  [ TEXT ]     = Process block
+  < TEXT >     = Decision diamond (Yes / No)
+  | v ^ -->    = Flow lines (arrows)
+
+
+##############################################################################
+  SECTION 1 : PSEUDOCODE
+##############################################################################
+
+------------------------------------------------------------------------------
+PROBLEM PC-1 : PRIME NUMBER CHECKER
+------------------------------------------------------------------------------
+Idea: A number N is NOT prime if any number from 2 up to sqrt(N) divides it.
+      If a factor larger than sqrt(N) exists, its partner factor is smaller
+      than sqrt(N), so testing up to sqrt(N) is enough.
+      We write i * i <= N instead of sqrt(N) to avoid decimals.
+
+PSEUDOCODE:
+
+    START
+        INPUT N                          // N is an integer, N > 1
+        SET isPrime = TRUE
+        SET i = 2
+
+        WHILE i * i <= N DO              // same as i <= sqrt(N)
+            IF N MOD i == 0 THEN         // i divides N exactly
+                SET isPrime = FALSE
+                BREAK                    // factor found, stop checking
+            END IF
+            SET i = i + 1
+        END WHILE
+
+        IF isPrime == TRUE THEN
+            PRINT "Prime"
+        ELSE
+            PRINT "Not Prime"
+        END IF
+    END
+
+DRY RUN - Example 1: N = 61
+    isPrime = TRUE
+    i = 2 : 2*2 = 4  <= 61 -> 61 MOD 2 = 1  (not 0) -> i = 3
+    i = 3 : 3*3 = 9  <= 61 -> 61 MOD 3 = 1  (not 0) -> i = 4
+    i = 4 : 4*4 = 16 <= 61 -> 61 MOD 4 = 1  (not 0) -> i = 5
+    i = 5 : 5*5 = 25 <= 61 -> 61 MOD 5 = 1  (not 0) -> i = 6
+    i = 6 : 6*6 = 36 <= 61 -> 61 MOD 6 = 1  (not 0) -> i = 7
+    i = 7 : 7*7 = 49 <= 61 -> 61 MOD 7 = 5  (not 0) -> i = 8
+    i = 8 : 8*8 = 64 >  61 -> loop ends
+    isPrime is still TRUE
+    OUTPUT: Prime
+
+DRY RUN - Example 2: N = 8
+    isPrime = TRUE
+    i = 2 : 2*2 = 4 <= 8 -> 8 MOD 2 = 0 -> isPrime = FALSE, BREAK
+    OUTPUT: Not Prime
+
+Time complexity : O(sqrt(N))      Space complexity : O(1)
+
+
+------------------------------------------------------------------------------
+PROBLEM PC-2 : NUMBER DIGIT REVERSAL
+------------------------------------------------------------------------------
+Idea: Repeatedly take out the LAST digit using  N MOD 10,
+      push it onto the END of the reversed number using  rev * 10 + digit,
+      then remove the last digit from N using integer division  N / 10.
+
+PSEUDOCODE:
+
+    START
+        INPUT N                          // integer, N >= 0
+        SET rev = 0
+
+        WHILE N > 0 DO
+            SET digit = N MOD 10         // extract last digit
+            SET rev   = rev * 10 + digit // append digit to reversed number
+            SET N     = N DIV 10         // integer division: drop last digit
+        END WHILE
+
+        PRINT rev
+    END
+
+    (N DIV 10 means integer division, e.g. 1234 DIV 10 = 123, remainder dropped)
+
+DRY RUN - Example 1: N = 1234
+    Start        : N = 1234, rev = 0
+    Iteration 1  : digit = 4, rev = 0*10 + 4   = 4,    N = 123
+    Iteration 2  : digit = 3, rev = 4*10 + 3   = 43,   N = 12
+    Iteration 3  : digit = 2, rev = 43*10 + 2  = 432,  N = 1
+    Iteration 4  : digit = 1, rev = 432*10 + 1 = 4321, N = 0
+    N > 0 is false -> loop ends
+    OUTPUT: 4321
+
+DRY RUN - Example 2: N = 806
+    Start        : N = 806, rev = 0
+    Iteration 1  : digit = 6, rev = 0*10 + 6  = 6,   N = 80
+    Iteration 2  : digit = 0, rev = 6*10 + 0  = 60,  N = 8
+    Iteration 3  : digit = 8, rev = 60*10 + 8 = 608, N = 0
+    N > 0 is false -> loop ends
+    OUTPUT: 608
+    (The 0 in the middle is handled correctly, because rev*10 shifts digits.)
+
+Time complexity : O(d) where d = number of digits (= O(log N))
+Space complexity : O(1)
+
+OPTIONAL (negative numbers): if N < 0, remember the sign, set N = -N,
+run the same loop, then set rev = -rev before printing.
+
+
+
+##############################################################################
+  SECTION 2 : FLOWCHARTS
+##############################################################################
+
+------------------------------------------------------------------------------
+PROBLEM FC-1 : PRIME NUMBER FLOWCHART
+------------------------------------------------------------------------------
+
+                     ( START )
+                         |
+                         v
+                  /   INPUT  N   /
+                         |
+                         v
+                [  isPrime = TRUE  ]
+                [      i = 2       ]
+                         |
+                         v
+        +------------>   |
+        |                v
+        |        < Is  i * i <= N ? >-------- NO ---------+
+        |                |                                |
+        |               YES                               |
+        |                v                                |
+        |        < Is  N MOD i == 0 ? >--- YES --+        |
+        |                |                       |        |
+        |               NO                       v        |
+        |                v             [ isPrime = FALSE ]|
+        |        [   i = i + 1   ]               |        |
+        |                |                       |        |
+        +----------------+                       |        |
+                                                 |        |
+                         +-----------------------+--------+
+                         |
+                         v
+               < Is  isPrime == TRUE ? >
+                  |               |
+                 YES              NO
+                  v               v
+        / PRINT "Prime" /   / PRINT "Not Prime" /
+                  |               |
+                  +-------+-------+
+                          |
+                          v
+                      ( END )
+
+LABELS:
+  Terminal nodes ........ START, END
+  Input block ........... INPUT N
+  Process blocks ........ isPrime = TRUE / i = 2 ;  i = i + 1 ;  isPrime = FALSE
+  Decision (loop bound) . i * i <= N ?      (i.e. i <= sqrt(N))
+  Decision (divisibility) N MOD i == 0 ?
+  Decision (final check). isPrime == TRUE ?
+  Output blocks ......... PRINT "Prime" ,  PRINT "Not Prime"
+
+TRACE for N = 8 : i=2 -> 4<=8 YES -> 8 MOD 2 == 0 YES -> isPrime=FALSE
+                  -> final check NO -> PRINT "Not Prime" -> END
+
+
+------------------------------------------------------------------------------
+PROBLEM FC-2 : NUMBER DIGIT REVERSAL FLOWCHART
+------------------------------------------------------------------------------
+
+                     ( START )
+                         |
+                         v
+                  /   INPUT  N   /
+                         |
+                         v
+                  [   rev = 0   ]
+                         |
+                         v
+        +------------>   |
+        |                v
+        |        < Is  N > 0 ? >------------- NO ----------+
+        |                |                                  |
+        |               YES                                 |
+        |                v                                  |
+        |      [ digit = N MOD 10 ]    <- extract last digit|
+        |                |                                  |
+        |                v                                  |
+        |      [ rev = rev * 10 + digit ] <- append digit   |
+        |                |                                  |
+        |                v                                  |
+        |      [ N = N DIV 10 ]        <- remove last digit |
+        |                |                                  |
+        +----------------+                                  |
+                                                            |
+                         +----------------------------------+
+                         |
+                         v
+                  /  PRINT  rev  /
+                         |
+                         v
+                      ( END )
+
+LABELS:
+  Terminal nodes ........ START, END
+  Input block ........... INPUT N
+  Initialisation ........ rev = 0
+  Loop condition ........ N > 0 ?
+  Process 1 (extract) ... digit = N MOD 10
+  Process 2 (append) .... rev = rev * 10 + digit
+  Process 3 (update N) .. N = N DIV 10        (integer division)
+  Output block .......... PRINT rev
+
+TRACE for N = 806 : (N=806,rev=0) -> (80,6) -> (8,60) -> (0,608) -> N>0 NO
+                    -> PRINT 608 -> END
+
+==============================================================================
+  END OF FILE
+==============================================================================
